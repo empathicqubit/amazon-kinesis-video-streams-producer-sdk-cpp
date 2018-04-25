@@ -31,6 +31,7 @@ RUN git clone https://github.com/awslabs/amazon-kinesis-video-streams-producer-s
 
 WORKDIR /opt/amazon-kinesis-video-streams-producer-sdk-cpp/kinesis-video-native-build/
 RUN  chmod a+x ./install-script
+RUN sed -i 's/^\([[:space:]]*\)make$/\1make -j$(nproc)/g' ./install-script
 RUN ./install-script a 
 COPY start_rtsp_in_docker.sh /opt/amazon-kinesis-video-streams-producer-sdk-cpp/kinesis-video-native-build/
 RUN chmod a+x ./start_rtsp_in_docker.sh
