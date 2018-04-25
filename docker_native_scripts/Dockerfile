@@ -1,18 +1,19 @@
 FROM ubuntu:17.10
 
-RUN apt-get update
-RUN apt-get install -y git && \
-    apt-get install -y vim  && \
-    apt-get install -y curl && \
-    apt-get install -y xz-utils && \
-    apt-get install -y byacc  && \
-    apt-get install -y wget  && \
-    apt-get install -y g++ && \
-    apt-get install -y python2.7 && \
-    apt-get install -y pkg-config && \
-    apt-get install -y cmake && \
-    apt-get install -y maven && \
-    apt-get install -y openjdk-8-jdk && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        git \
+        vim \
+        curl \
+        xz-utils \
+        byacc \
+        wget \ 
+        g++ \ 
+        python2.7 \
+        pkg-config \
+        cmake \
+        maven \
+        openjdk-8-jdk && \
     rm -rf /var/lib/apt/lists/*
 ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/
 WORKDIR /opt/
@@ -34,6 +35,8 @@ RUN ./install-script a
 COPY start_rtsp_in_docker.sh /opt/amazon-kinesis-video-streams-producer-sdk-cpp/kinesis-video-native-build/
 RUN chmod a+x ./start_rtsp_in_docker.sh
 
+ENV LD_LIBRARY_PATH /opt/amazon-kinesis-video-streams-producer-sdk-cpp/kinesis-video-native-build/downloads/local/lib:${LD_LIBRARY_PATH}
+
 # comment the following step if you would like to customize the docker image build
 ENTRYPOINT ["/opt/amazon-kinesis-video-streams-producer-sdk-cpp/kinesis-video-native-build/start_rtsp_in_docker.sh"]
 
@@ -51,10 +54,7 @@ ENTRYPOINT ["/opt/amazon-kinesis-video-streams-producer-sdk-cpp/kinesis-video-na
 # rtspdockertest      latest              54f0d65f69b2        Less than a second ago   2.82GB
 #
 # === Start the container with credentials ===
-# $ docker run -it 54f0d65f69b2 <AWS_ACCESS_KEY_ID> <AWS_SECRET_ACCESS_KEY> <RTSP_URL> <STREAM_NAME>
+# $ docker run -it -e AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID> -e AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> -e AWS_SESSION_TOKEN=<AWS_SESSION_TOKEN> -e RTSP_URL=<RTSP_URL> -e KINESIS_STREAM_NAME=<KINESIS_STREAM_NAME> rtspdockertest
 # 
 #
 #
-
-
-

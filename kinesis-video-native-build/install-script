@@ -100,7 +100,7 @@ if [ ! -f $DOWNLOADS/local/lib/libssl.a ]; then
   tar -xvf openssl-1.1.0f.tar.gz
   cd $DOWNLOADS/openssl-1.1.0f
   ./config  --prefix=$DOWNLOADS/local/ --openssldir=$DOWNLOADS/local/
-  make
+  make -j$(nproc)
   make install
 fi
 
@@ -115,7 +115,7 @@ if [ ! -f $DOWNLOADS/local/lib/libcurl.a ]; then
   tar -xvf curl-7.57.0.tar.xz
   cd $DOWNLOADS/curl-7.57.0
   ./configure --prefix=$DOWNLOADS/local/ --enable-dynamic --disable-rtsp --disable-ldap --without-zlib --with-ssl=$DOWNLOADS/local/ --with-ca-bundle=/etc/ssl/cert.pem
-  make
+  make -j$(nproc)
   make install
 fi
 
@@ -131,7 +131,7 @@ if [ ! -f $DOWNLOADS/local/lib/liblog4cplus.dylib ]; then
     tar -xvf log4cplus-1.2.0.tar.xz
     cd $DOWNLOADS/log4cplus-1.2.0
     ./configure --prefix=$DOWNLOADS/local/
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -148,7 +148,7 @@ if [ ! -f $DOWNLOADS/local/lib/libgettextlib.dylib ]; then
    tar -xvf gettext-0.19.8.tar.xz
    cd $DOWNLOADS/gettext-0.19.8
    ./configure --prefix=$DOWNLOADS/local/
-   make
+   make -j$(nproc)
    make install
  fi
 fi
@@ -166,7 +166,7 @@ if [ ! -f $DOWNLOADS/local/lib/libffi.dylib ]; then
     tar -xvf libffi-3.2.1.tar.gz
     cd $DOWNLOADS/libffi-3.2.1
     ./configure --prefix=$DOWNLOADS/local/
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -183,7 +183,7 @@ if [ ! -f $DOWNLOADS/local/lib/libpcre.dylib ]; then
     tar -xvf pcre-8.41.tar.gz
     cd $DOWNLOADS/pcre-8.41
     ./configure --prefix=$DOWNLOADS/local/
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -200,7 +200,7 @@ if [ ! -f $DOWNLOADS/local/lib/libz.dylib ]; then
     tar -xvf zlib-1.2.11.tar.gz
     cd $DOWNLOADS/zlib-1.2.11
     ./configure --prefix=$DOWNLOADS/local/
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -217,7 +217,7 @@ if [ ! -f $DOWNLOADS/local/lib/libiconv.dylib ]; then
     tar -xvf libiconv-1.15.tar.gz
     cd $DOWNLOADS/libiconv-1.15
     ./configure --prefix=$DOWNLOADS/local/
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -235,7 +235,7 @@ if [[ $PLATFORM == 'linux' ]]; then
       tar -xvf util-linux-2.31.tar.gz
       cd $DOWNLOADS/util-linux-2.31
       ./configure --prefix=$DOWNLOADS/local/ --disable-all-programs --enable-libmount --enable-libblkid
-      make
+      make -j$(nproc)
       make install
     fi
   fi
@@ -252,7 +252,7 @@ fi
     tar -xvf m4-1.4.10.tar.xz
     cd $DOWNLOADS/m4-1.4.10
     ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
  fi
 #-----------------------liby.a----------------------------
@@ -267,7 +267,7 @@ if [[ $PLATFORM != 'mac' || $KERNEL_VERSION < 17 ]]; then
     tar -xvf bison-3.0.4.tar.xz
     cd $DOWNLOADS/bison-3.0.4
     ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
  fi
 fi
@@ -284,7 +284,7 @@ fi
           tar -xvf flex-2.6.3.tar.xz
           cd $DOWNLOADS/flex-2.6.3
           ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-          make
+          make -j$(nproc)
           make install
       fi
   fi
@@ -302,7 +302,7 @@ fi
       tar -xvf libtool-2.4.6.tar.xz
       cd $DOWNLOADS/libtool-2.4.6
       ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-      make
+      make -j$(nproc)
       make install
     fi
   fi
@@ -327,7 +327,7 @@ if [ ! -f $DOWNLOADS/local/lib/libglib-2.0.dylib ]; then
    cd $DOWNLOADS/glib-2.54.2
   # autoreconf -f -i
    ./configure --prefix=$DOWNLOADS/local/ --with-pcre --with-libiconv
-   make
+   make -j$(nproc)
    make install
  fi
 fi
@@ -344,7 +344,7 @@ if [ ! -f $DOWNLOADS/local/lib/libgtest.dylib ]; then
     tar -xvf google-test-1.8.0.gz
     cd googletest-release-1.8.0/googletest
     cmake -DBUILD_SHARED_LIBS=ON .
-    make
+    make -j$(nproc)
     mkdir -p $DOWNLOADS/local/lib
     cp -r ./include $DOWNLOADS/local
     cp ./lib* $DOWNLOADS/local/lib
@@ -364,7 +364,7 @@ if [[ $PLATFORM != 'mac' || $KERNEL_VERSION < 17 ]]; then
     tar -xvf autoconf-2.69.tar.xz
     cd $DOWNLOADS/autoconf-2.69
     ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
  fi
 fi
@@ -379,7 +379,7 @@ fi
     tar -xvf automake-1.15.1.tar.xz
     cd $DOWNLOADS/automake-1.15.1
     ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
 fi
 
@@ -405,7 +405,7 @@ if [ ! -f $DOWNLOADS/local/lib/libgstreamer-1.0.dylib ]; then
     done
 
     ./configure --prefix=$DOWNLOADS/local --disable-gtk-doc -- CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -429,7 +429,7 @@ if [ ! -f $DOWNLOADS/local/lib/libgstvideo-1.0.dylib ]; then
     done
 
     ./configure --prefix=$DOWNLOADS/local --disable-gtk-doc -- CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -452,7 +452,7 @@ if [ ! -f $DOWNLOADS/local/lib/gstreamer-1.0/libgstavi.la ]; then
   done
 
   ./configure --prefix=$DOWNLOADS/local --disable-examples --disable-x --disable-gtk-doc  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-  make
+  make -j$(nproc)
   make install
 fi
 
@@ -475,7 +475,7 @@ if [ ! -f $DOWNLOADS/local/lib/libgstbadvideo-1.0.dylib ]; then
     done
 
     ./configure --prefix=$DOWNLOADS/local --disable-gtk-doc --disable-wayland  --disable-opencv --disable-ldap --disable-rtsp --without-zlib --without-ssl --disable-yadif --disable-sdl --disable-debug --disable-dependency-tracking LIBTOOL="$DOWNLOADS/gst-plugins-bad-1.12.3/libtool --tag=CC" CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -499,7 +499,7 @@ if [ ! -f $DOWNLOADS/local/lib/libx264.dylib ]; then
     done
 
     ./configure --prefix=$DOWNLOADS/local --enable-shared --disable-cli --disable-asm
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -523,7 +523,7 @@ if [ ! -f $DOWNLOADS/local/lib/gstreamer-1.0/libgstx264.dylib ]; then
     done
 
     ./configure --prefix=$DOWNLOADS/local --disable-gtk-doc CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
   fi
 fi
@@ -546,7 +546,7 @@ echo "Checking for yasm"
       fi
     done
     ./configure --prefix=$DOWNLOADS/local  CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
 fi
 
@@ -569,7 +569,7 @@ if [ ! -f $DOWNLOADS/local/lib/gstreamer-1.0/libgstlibav.dylib ]; then
       fi
     done
     ./configure --prefix=$DOWNLOADS/local CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-    make
+    make -j$(nproc)
     make install
 fi
 fi
@@ -598,7 +598,7 @@ if [[ $sys_info =~ ^arm ]]; then
       done
 
       ./configure --prefix=$DOWNLOADS/local --disable-gtk-doc --with-omx-header-path=/opt/vc/include/IL --with-omx-target=rpi CFLAGS="-I$DOWNLOADS/local/include" LDFLAGS="-L$DOWNLOADS/local/lib"
-      make
+      make -j$(nproc)
       make install
     fi
   fi
